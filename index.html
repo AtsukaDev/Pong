@@ -8,20 +8,32 @@
     <link rel="stylesheet" href="./style/style.css" />
     <script defer src="./scripts/script.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://kit.fontawesome.com/733557e380.js" crossorigin="anonymous"></script>
 </head>
 
-<body>
-    <div>
-        <h1>Solo Pong</h1>
-        <h3>Stay alive as long as you can !</h3>
-        <canvas width="400" height="600" id="game" class="my-5 border-4 border-black rounded-xl"></canvas>
-        <button onclick="resetGame()">New Game</button>
-        <h4>Score : <span></span>s</h4>
+<body class="bg-[#000430]">
+ 
+    <div class="flex justify-center mt-2">
         <div>
-            <button id="left">Left</button>
-            <button id="right">Right</button>
+            <div>
+                <h1 class="mb-3 text-white text-4xl font-bold text-center">Solo Pong</h1>
+                <h4 class="text-center text-white text-3xl">Score : <span id="score" class="text-4xl"></span>s</h4>
+            </div>
+            <canvas width="400" height="600" id="game"
+                class="    my-5 border-8 border-[#3849ff] rounded-xl bg-white "></canvas>
+            <div class="flex  gap-4 justify-center">
+                <button id="left" class="lg:hidden border-4 border-white px-2 py-4 rounded-full"><i
+                        class="fa-solid fa-arrow-left fa-2xl" style="color: #ffffff;"></i></button>
+                <button onclick="resetGame()"
+                    class="text-white font-bold text-3xl border-white border-4 rounded-full p-2 px-4">New Game</button>
+                <button id="right" class="lg:hidden border-4 border-white p-2 rounded-full"><i
+                        class="fa-solid fa-arrow-right fa-2xl" style="color: #ffffff;"></i></button>
+            </div>
         </div>
+        <a class="text-white absolute bottom-0 text-center underline" href="https://github.com/AtsukaDev">Made with ❤️</a>
     </div>
+
+    
 
 
 
