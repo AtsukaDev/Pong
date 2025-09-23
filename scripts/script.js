@@ -124,6 +124,5 @@ function resetGame() {
     startGame();
 }
 
-startGame();
 
 
