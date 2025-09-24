@@ -1,1 +1,1 @@
-### [Hosted Pong](https://pong.lukasb.dev/)
+## 🎮 [Hosted Pong](https://pong.lukasb.dev/)
