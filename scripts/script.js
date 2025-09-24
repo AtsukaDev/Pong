@@ -2,7 +2,11 @@ const canvas = document.getElementById('game');
 const ctx = canvas.getContext('2d');
 const leftButton = document.getElementById('left');
 const rightButton = document.getElementById('right');
-const scoreboard = document.getElementById('score')
+const scoreboard = document.getElementById('score');
+const loseMsg = document.getElementById('lose');
+const best = document.getElementById("best");
+let storage = localStorage;
+storage.setItem("best", 0);
 
 let score = Date.now();
 
@@ -15,7 +19,7 @@ let dx = speedsX[Math.floor(Math.random() * speedsX.length)];
 let dy = speedsY[Math.floor(Math.random() * speedsY.length)];
 
 let x = canvas.width / 2;
-let y = canvas.height / 2 - 50;
+let y = canvas.height -20;
 
 let boxX = canvas.width / 2;
 let boxY = canvas.height - 10;
@@ -27,12 +31,24 @@ let heightFromGround = 15;
 let rightKeyUp = false;
 let leftKeyUp = false;
 
-leftButton.addEventListener('click', () => {
-    boxX -= 15;
-})
-rightButton.addEventListener('click', () => {
-    boxX += 15;
-})
+let leftButtonUp = false;
+let rightButtonUp = false;
+
+function leftDown() {
+    leftButtonUp = true;
+}
+
+function leftUp() {
+    leftButtonUp = false;
+}
+
+function rightDown() {
+    rightButtonUp = true;
+}
+
+function rightUp() {
+    rightButtonUp = false;
+}
 
 
 document.addEventListener('keydown', function (event) {
@@ -54,7 +70,16 @@ document.addEventListener('keyup', function (event) {
 });
 
 function startGame() {
-    if (isLose) return;
+    if (isLose) {
+        loseMsg.classList.replace('hidden', 'absolute');
+        let now = Date.now()
+        let actualScore = ((now - score) / 1000).toFixed(0);
+        if(actualScore > storage.getItem("best")){
+            storage.setItem("best", actualScore);
+            best.innerHTML = actualScore;
+        }
+        return;
+    }
 
     ctx.beginPath();
     // Draw Ball
@@ -64,10 +89,10 @@ function startGame() {
     ctx.fill()
     ctx.stroke();
 
-    if (leftKeyUp && boxX - boxRadius > 0) {
+    if ((leftKeyUp || leftButtonUp) && boxX - boxRadius > 0) {
         boxX -= 5;
     }
-    if (rightKeyUp && boxX + boxRadius < canvas.width) {
+    if ((rightKeyUp || rightButtonUp) && boxX + boxRadius < canvas.width) {
         boxX += 5;
     }
 
@@ -88,8 +113,15 @@ function startGame() {
         
     }
 
-    if (y > boxY - boxHeight && x > boxX - boxRadius && x < boxX + boxRadius) {
+    if (y > boxY - boxHeight/2 - 3 && x > boxX - boxRadius && x < boxX + boxRadius) {
         dy = -dy;
+        if(dy < 20) {
+            dy+=0.3;
+        }
+        if(dx < 20){
+            dx+=0.3;
+        }
+        
     }
 
     if (x < 10) {
@@ -108,6 +140,9 @@ function startGame() {
     let now = Date.now()
     let actualScore = (now - score) / 1000
     scoreboard.innerHTML = actualScore.toFixed(0);
+    if(actualScore > storage.getItem("best")){
+        best.innerHTML =  actualScore.toFixed(0);
+    }
 
     rafId = requestAnimationFrame(startGame);
 }
@@ -118,9 +153,10 @@ function resetGame() {
     dx = speedsX[Math.floor(Math.random() * speedsX.length)];
     dy = speedsY[Math.floor(Math.random() * speedsY.length)];
     x = canvas.width / 2;
-    y = canvas.height / 2 - 50;
+    y = canvas.height - 20;
     boxX = canvas.width / 2;
     isLose = false;
+    loseMsg.classList.replace('absolute', 'hidden');
     startGame();
 }
 
