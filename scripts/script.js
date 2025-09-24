@@ -51,6 +51,7 @@ function rightUp() {
 }
 
 leftButton.addEventListener('touchstart', () => {
+    alert("test");
     leftDown();
 })
 leftButton.addEventListener('touchend', () => {
