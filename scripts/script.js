@@ -50,6 +50,19 @@ function rightUp() {
     rightButtonUp = false;
 }
 
+leftButton.addEventListener('touchstart', () => {
+    leftDown();
+})
+leftButton.addEventListener('touchend', () => {
+    leftUp();
+})
+rightButton.addEventListener('touchstart', () => {
+    rightDown();
+})
+rightButton.addEventListener('touchend', () => {
+    rightUp();
+})
+
 
 document.addEventListener('keydown', function (event) {
     if (event.key == "ArrowLeft") {
